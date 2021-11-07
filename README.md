@@ -34,18 +34,16 @@
 
 ```
 // 在命令行里执行
-$ npm install dimple
+$ npm i @dimple-smile/uni-scroll
 
 // 在你的代码里写
-import DimpleUniScroll from 'dimple'
-
+import DimpleUniScroll from '@dimple-smile/uni-scroll'
 ```
 
 # 使用说明
 [(Back to top)](#目录)
 
 > 在pages/index/index.vue文件里能看到一个使用的栗子
-
 ### 参数
 [(Back to top)](#目录)
 
@@ -66,19 +64,19 @@ import DimpleUniScroll from 'dimple'
 
 | 参数名 | 意义 | 说明 |
 | - | - | - |
-| refresher | 自定义下拉刷新 | 通过v-slot:refresher="{dy, threshold, loading}"获取自定义需要的数据。dy：下拉偏移值；threshold：下拉触发事件的阈值；loading：是否出于加载状态。|
+| refresher | <div style="width:140px">自定义下拉刷新</div> | 通过v-slot:refresher="{dy, threshold, loading}"获取自定义需要的数据。dy：下拉偏移值；threshold：下拉触发事件的阈值；loading：是否出于加载状态。|
 | loadmorer | 自定义上拉加载 | 通过v-slot:loadmorer="{dy, threshold, loading}"获取自定义需要的数据。dy：上拉拉偏移值；threshold：上拉拉触发事件的阈值；loading：是否出于加载状态。|
 | no-data | 无数据时的内容 | 需要设置skip和total来配合判断 |
-| no-more | 无更多数据时的内容 | 需要设置skip和total来配合判断 |
+| no-more | 到底时的内容 | 需要设置skip和total来配合判断 |
 | 默认 | 用来放置列表内容 | 无
 
 ### 事件
 [(Back to top)](#目录)
 | 事件名 | 意义 | 说明 |
 | - | - | - |
-| fetch | 下拉/上拉超过阈值之后触发的方法 | 使用者需要把更新列表的方法写在这个回调里，回调得到值是一个对象，对象里是一些可用参数。skip：见参数说明；limit：见参数说明；total：见参数说明；page：当前加载到的页码；loadmore：是否是上拉加载；stop：一个function，必须要手动调用stop()才会停止刷新/加载动作！所以要求对请求进行防呆处理，保证请求失败也会调用stop() |
+| fetch | <div style="width:140px">下拉/上拉超过阈值之后触发的方法</div> | 使用者需要把更新列表的方法写在这个回调里，回调得到值是一个对象，对象里是一些可用参数。skip：见参数说明；limit：见参数说明；total：见参数说明；page：当前加载到的页码；loadmore：是否是上拉加载；stop：一个function，必须要手动调用stop()才会停止刷新/加载动作！所以要求对请求进行防呆处理，保证请求失败也会调用stop() |
 | transition | swiper组件的事件 | 无特殊需要一般无需理会 |
-| scroll | scroll-view组件的滚动事件 | 按需求使用 |
+| scroll | scroll-view组件的滚动事件 | 按需使用 |
 
 注意：fetch是必须要handle的，handle后需要手动调用回调得到参数对象里的stop方法才能停止下拉/上拉动作。
 # 开发说明
