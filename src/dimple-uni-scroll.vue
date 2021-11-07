@@ -57,7 +57,7 @@ export default {
     background: { type: String, default: '#eeeeee' },
     threshold: { type: Number, default: 60 },
     limit: { type: Number, default: 20 },
-    skip: { type: Number, default: 0 },
+    skip: { type: Number, default: -1 },
     total: { type: Number, default: -1 },
   },
   data() {
@@ -82,7 +82,8 @@ export default {
       return this.total === 0 && !this.freshing
     },
     isNoMore() {
-      return this.total === this.skip && !this.loading
+      if (this.total < 0 || this.skip < 0) return false
+      return this.total <= this.skip && !this.loading
     },
   },
   methods: {
@@ -131,8 +132,8 @@ export default {
         stop: this.stop,
         skip: this.skip,
         limit: this.limit,
-        page: currentPage,
-        pageIndex: currentPage,
+        page: currentPage + 1,
+        pageIndex: currentPage + 1,
         pageSize: this.limit,
         total: this.total,
       })

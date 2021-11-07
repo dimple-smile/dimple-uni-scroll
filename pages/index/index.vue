@@ -1,6 +1,6 @@
 <template>
   <view class="dimple-uni-scroll-demo">
-    <dimple-uni-scroll :total="total" :skip="list.length" :limit="20" @fetch="fetch">
+    <dimple-uni-scroll :total="total" :skip="skip" :limit="20" @fetch="fetch">
       <view class="scroll-content">
         <view v-for="(item, index) in list" :key="index" class="scroll-item">{{ index + 1 }}</view>
       </view>
@@ -16,6 +16,7 @@ export default {
     return {
       list: [],
       total: -1,
+      skip: -1,
     }
   },
   methods: {
@@ -36,9 +37,10 @@ export default {
           res(data)
         }, 2000)
       )
-      this.total = 100
+      this.total = 60
       if (page === 1) this.list = []
       this.list.push(...res)
+      this.skip = this.list.length
     },
   },
   async mounted() {

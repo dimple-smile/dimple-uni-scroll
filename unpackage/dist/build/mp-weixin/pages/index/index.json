@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "dimple-uni-scroll",
+  "usingComponents": {
+    "dimple-uni-scroll": "/src/dimple-uni-scroll"
+  }
+}

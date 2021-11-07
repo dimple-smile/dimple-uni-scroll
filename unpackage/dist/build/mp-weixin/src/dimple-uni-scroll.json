@@ -1,0 +1,10 @@
+{
+  "componentGenerics": {
+    "scoped-slots-refresher": true,
+    "scoped-slots-loadmorer": true
+  },
+  "component": true,
+  "usingComponents": {
+    "scroll-loader": "/src/dimple-uni-scroll-loader"
+  }
+}

@@ -1,3 +1,108 @@
-# dimple-uni-scroll
+<!-- Add banner here -->
 
-用于uniapp的滚动容器组件，基于swiper滑动实现极致体验:sparkles:的下拉刷新和上拉加载。开箱即用，并支持自定义slot:stuck_out_tongue_winking_eye:。
+# 简介
+使用uniapp框架开发遇到了下拉刷新和上拉加载的需求？各种实现方案需要对比，还没找到体验又好使用又简单的？那么这个组件是你在找的！
+
+试验过多种方案后，得出使用swiper滑动处理体验最好的结论，并且在APP、H5、微信小程序效果都不错，交互体验基本一致。除了uniapp运行时依赖，没有任何第三方依赖。
+
+由于使用swiper的transition事件获取滑动距离，这里的性能就由框架本身背书了。对于滑动距离变化和下拉/上拉状态的交互，这块需要操作dom，默认封装好的下拉/上拉场景没有使用wxs优化对dom的操作，需要进一步优化的同学也可以使用自定义slot进行处理。
+
+# 组件效果预览
+你有三种方式预览
+- 使用浏览器访问该地址：https://dimple-uni-scroll.vercel.app 进行预览（注意开启开发者模式调整到移动设备）。
+- 使用微信小程序开发工具导入该代码段链接：https://developers.weixin.qq.com/s/jjJmUDmy74u8 进行预览。（微信小程序开发工具代码段使用说明见：https://developers.weixin.qq.com/miniprogram/dev/devtools/minicode.html）
+- 这个项目本身就是一个uniapp项目，git clone该项目到本地后，可使用HBuiderX导入该项目进行预览。
+
+# 目录
+
+- [简介](#简介)
+- [组件效果预览](#组件效果预览)
+- [目录](#目录)
+- [安装](#安装)
+- [使用说明](#使用说明)
+    - [参数](#参数)
+    - [插槽](#插槽)
+    - [事件](#事件)
+- [开发说明](#开发说明)
+- [贡献](#贡献)
+    - [赞助](#赞助)
+- [许可证](#许可证)
+- [最后](#最后)
+
+# 安装
+[(Back to top)](#目录)
+
+```
+// 在命令行里执行
+$ npm install dimple
+
+// 在你的代码里写
+import DimpleUniScroll from 'dimple'
+
+```
+
+# 使用说明
+[(Back to top)](#目录)
+
+> 在pages/index/index.vue文件里能看到一个使用的栗子
+
+### 参数
+[(Back to top)](#目录)
+
+| 参数名 | 类型 | 默认值 | 意义 | 说明 |
+| -| -| -| - | - |
+| height | String | 100% | 滚动容器的高度 | 默认100%，代表使用该组件的父元素必须具有高度
+| background | String | #eeeeee | 滚动容器的背景色 | 这个背景色会和下拉/上拉时的背景色一致 |
+| threshold | Number | 60 | 距离顶部/底部多少距离触发释放方法 | 自定义下拉/上拉时，slot区域的高度会被设置为此值，单位为px。
+| limit | Number | 20 | 请求数据一页的长度 | 该参数偏业务，如不使用可以不设置，结果是无限加载，不会出现到底了。 |
+| skip | Number | -1 | 请求数据时跳过多少已加载的条数| 比如列表已经加载了20条数据，那么skip应为20。该参数偏业务，如不使用可以不设置，结果是无限加载，不会出现到底了。 |
+| total | Number | -1 | 一共有多少条数据 | 默认值不能设置为0，应在请求之后设置该值。该参数偏业务，如不使用可以不设置，结果是无限加载，不会出现到底了。 |
+
+注意：limit、skip、total三个参数配合可以得出，是否没有数据，出是否已经加载完数据。注意都要在请求之后再改变skip和total，默认值不要设置为0。
+
+### 插槽
+[(Back to top)](#目录)
+
+
+| 参数名 | 意义 | 说明 |
+| - | - | - |
+| refresher | 自定义下拉刷新 | 通过v-slot:refresher="{dy, threshold, loading}"获取自定义需要的数据。dy：下拉偏移值；threshold：下拉触发事件的阈值；loading：是否出于加载状态。|
+| loadmorer | 自定义上拉加载 | 通过v-slot:loadmorer="{dy, threshold, loading}"获取自定义需要的数据。dy：上拉拉偏移值；threshold：上拉拉触发事件的阈值；loading：是否出于加载状态。|
+| no-data | 无数据时的内容 | 需要设置skip和total来配合判断 |
+| no-more | 无更多数据时的内容 | 需要设置skip和total来配合判断 |
+| 默认 | 用来放置列表内容 | 无
+
+### 事件
+[(Back to top)](#目录)
+| 事件名 | 意义 | 说明 |
+| - | - | - |
+| fetch | 下拉/上拉超过阈值之后触发的方法 | 使用者需要把更新列表的方法写在这个回调里，回调得到值是一个对象，对象里是一些可用参数。skip：见参数说明；limit：见参数说明；total：见参数说明；page：当前加载到的页码；loadmore：是否是上拉加载；stop：一个function，必须要手动调用stop()才会停止刷新/加载动作！所以要求对请求进行防呆处理，保证请求失败也会调用stop() |
+| transition | swiper组件的事件 | 无特殊需要一般无需理会 |
+| scroll | scroll-view组件的滚动事件 | 按需求使用 |
+
+注意：fetch是必须要handle的，handle后需要手动调用回调得到参数对象里的stop方法才能停止下拉/上拉动作。
+# 开发说明
+[(Back to top)](#目录)
+
+src文件夹存放着组件的全部源码。入口为src/dimple-uni-scroll.vue。
+
+# 贡献
+[(Back to top)](#目录)
+
+@dimple-smile
+
+### 赞助
+[(Back to top)](#目录)
+
+Love
+# 许可证
+[(Back to top)](#目录)
+
+只要不商用，注明出处即可。
+
+[GNU General Public License version 3](https://opensource.org/licenses/GPL-3.0)
+
+# 最后
+[(Back to top)](#目录)
+
+谢谢你的使用~
