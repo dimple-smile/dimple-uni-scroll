@@ -1,6 +1,6 @@
 {
   "name": "@dimple-smile/uni-scroll",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "用于uniapp的滚动容器组件，基于swiper滑动实现极致体验的下拉刷新和上拉加载。",
   "main": "/src/dimple-uni-scroll.vue",
   "scripts": {
