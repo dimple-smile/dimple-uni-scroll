@@ -37,7 +37,7 @@ export default {
           res(data)
         }, 2000)
       )
-      this.total = 60
+      this.total = 100
       if (page === 1) this.list = []
       this.list.push(...res)
       this.skip = this.list.length
@@ -53,6 +53,7 @@ export default {
 
 <style scoped>
 .dimple-uni-scroll-demo {
+  /* 这里设置了继承page的100%，需要保证page设置了height: 100% */
   height: 100%;
   overflow: hidden;
 }
