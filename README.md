@@ -49,7 +49,7 @@ import DimpleUniScroll from '@dimple-smile/uni-scroll'
 > 在pages/index/index.vue文件里能看到一个使用的栗子
 ### 参数
 [(Back to top)](#目录)
-| <img width="100px" /> 参数名 <img width="100px" /> | <img width="180px" /> 意义 <img width="180px" /> | 类型 | 默认值 | 说明 |
+| 参数名 | <img width="180px" /> 意义 <img width="180px" /> | 类型 | <img width="100px" /> 默认值 <img width="100px" /> | 说明 |
 | -| -| -| - | - |
 | height | 滚动容器的高度  | String | 100%| 默认100%，代表使用该组件的父元素必须具有高度。ps: 高度继承page的100%时，page需要设置height: 100%，page默认无高度。
 | background | 滚动容器的背景色 | String | #eeeeee | 这个背景色会和下拉/上拉时的背景色一致。 |
@@ -81,7 +81,7 @@ import DimpleUniScroll from '@dimple-smile/uni-scroll'
 
 ### 事件
 [(Back to top)](#目录)
-| <img width="100px" /> 参数名 <img width="100px" /> | <img width="180px" /> 意义 <img width="180px" /> | 说明 |
+| <img width="100px" /> 参数名 <img width="100px" /> | <img width="400px" /> 意义 <img width="400px" /> | 说明 |
 | - | - | - |
 | fetch | 下拉/上拉超过阈值之后触发的方法 | 使用者需要把更新列表的方法写在这个回调里，回调得到值是一个对象，对象里是一些可用参数。skip：见参数说明；limit：见参数说明；total：见参数说明；page：当前加载到的页码；loadmore：是否是上拉加载；stop：一个function，必须要手动调用stop()才会停止刷新/加载动作！所以要求对请求进行防呆处理，保证请求失败也会调用stop()。 |
 | transition | swiper组件的事件 | 无特殊需要一般无需理会。 |
