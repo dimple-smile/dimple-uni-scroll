@@ -3,7 +3,7 @@
 # 简介
 使用uniapp框架开发遇到了下拉刷新和上拉加载的需求？这个组件正在欲高质量完成这个需求！该组件有以下特点：
 
-- 微信小程序、H5、、APP体验基本一致。
+- 微信小程序、H5、APP体验基本一致。
 - 使用swiper滑动实现下拉上拉，效果喜人；可以通过配置选择【自动】加载更多或者【手动上拉】加载更多。
 - 除了uniapp运行时依赖，没有任何第三方依赖。
 - 基于常用业务场景实现了一套开箱即用的规则；当然不喜欢也没有关系，使用配置和插槽二次封装也相当简单。
@@ -49,7 +49,7 @@ import DimpleUniScroll from '@dimple-smile/uni-scroll'
 > 在pages/index/index.vue文件里能看到一个使用的栗子
 ### 参数
 [(Back to top)](#目录)
-| 参数名 | <img width="180px" /> 意义 <img width="180px" /> | 类型 | <img width="100px" /> 默认值 <img width="100px" /> | 说明 |
+| 参数名 | <img width="180px" /> 意义 <img width="180px" /> | 类型 | <img width="120px" /> 默认值 <img width="120px" /> | 说明 |
 | -| -| -| - | - |
 | height | 滚动容器的高度  | String | 100%| 默认100%，代表使用该组件的父元素必须具有高度。ps: 高度继承page的100%时，page需要设置height: 100%，page默认无高度。
 | background | 滚动容器的背景色 | String | #eeeeee | 这个背景色会和下拉/上拉时的背景色一致。 |
