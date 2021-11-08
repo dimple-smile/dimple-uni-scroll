@@ -71,7 +71,7 @@ import DimpleUniScroll from '@dimple-smile/uni-scroll'
 ### 插槽
 [(Back to top)](#目录)
 
-| <img width="100px" /> 参数名 <img width="100px" /> | <img width="180px" /> 意义 <img width="180px" /> | 说明 |
+| <img width="100px" /> 参数名 <img width="100px" /> | <img width="200px" /> 意义 <img width="200px" /> | 说明 |
 | - | - | - |
 | refresher | 自定义下拉刷新 | 通过v-slot:refresher="{dy, threshold, loading}"获取自定义需要的数据。dy：下拉偏移值；threshold：下拉触发事件的阈值；loading：是否出于加载状态。|
 | loadmorer | 自定义上拉加载 | 通过v-slot:loadmorer="{dy, threshold, loading}"获取自定义需要的数据。dy：上拉拉偏移值；threshold：上拉拉触发事件的阈值；loading：是否出于加载状态。|
