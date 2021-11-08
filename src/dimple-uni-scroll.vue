@@ -11,9 +11,9 @@
                 <scroll-loader :progress="freshing ? 100 : (-dy / threshold) * 100" :spin="freshing"></scroll-loader>
                 <view style="width: 5px"></view>
                 <view>
-                  <template v-if="freshing"> 加载中... </template>
+                  <template v-if="freshing"> {{ loadingText }} </template>
                   <template v-else>
-                    {{ refresherActived ? '松开刷新' : '下拉刷新' }}
+                    {{ refresherActived ? refresherActivedText : refresherText }}
                   </template>
                 </view>
               </view>
@@ -22,9 +22,13 @@
         </view>
         <scroll-view class="dimple-uni-scroll" scroll-y :style="{ background: background }" @scroll="handleScroll">
           <view class="dimple-uni-scroll-content">
-            <slot v-if="isNoData" name="no-data"><view class="dimple-uni-scroll-no-data">暂无数据</view></slot>
+            <slot v-if="isNoData" name="no-data">
+              <view class="dimple-uni-scroll-no-data">{{ noDataText }}</view>
+            </slot>
             <slot></slot>
-            <slot v-if="isNoMore" name="no-more"><view class="dimple-uni-scroll-no-more">到底了~</view></slot>
+            <slot v-if="isNoMore" name="no-more">
+              <view class="dimple-uni-scroll-no-more">{{ noMoreText }}</view>
+            </slot>
           </view>
           <view class="dimple-uni-scroll-autoload-flag"></view>
         </scroll-view>
@@ -36,9 +40,9 @@
                 <scroll-loader :progress="loading ? 100 : (dy / threshold) * 100" :spin="loading"></scroll-loader>
                 <view style="width: 5px"></view>
                 <view>
-                  <template v-if="loading"> 加载中... </template>
+                  <template v-if="loading"> {{ loadingText }} </template>
                   <template v-else>
-                    {{ loadmorerActived ? '松开加载' : '上拉加载' }}
+                    {{ loadmorerActived ? loadmorerActivedText : loadmorerText }}
                   </template>
                 </view>
               </view>
@@ -63,6 +67,13 @@ export default {
     skip: { type: Number, default: -1 },
     total: { type: Number, default: -1 },
     autoload: { type: Boolean, default: true },
+    refresherText: { type: String, default: '下拉刷新' },
+    refresherActivedText: { type: String, default: '松开刷新' },
+    loadmorerText: { type: String, default: '上拉加载' },
+    loadmorerActivedText: { type: String, default: '松开加载' },
+    loadingText: { type: String, default: '加载中...' },
+    noDataText: { type: String, default: '暂无数据' },
+    noMoreText: { type: String, default: '到底了~' },
   },
   data() {
     return {
@@ -206,15 +217,9 @@ export default {
 
 .dimple-uni-scroll {
   height: 100%;
-  // position: relative;
 }
 .dimple-uni-scroll-autoload-flag {
-  height: 1rpx;
-  // position: absolute;
-  // bottom: 0px;
-  // width: 100%;
-  // height: 10px;
-  // background: red;
+  height: 1px;
 }
 .dimple-uni-scroll ::-webkit-scrollbar {
   display: none;

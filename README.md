@@ -1,11 +1,14 @@
 <!-- Add banner here -->
 
 # 简介
-使用uniapp框架开发遇到了下拉刷新和上拉加载的需求？这个组件正在欲高质量完成这个需求！
+使用uniapp框架开发遇到了下拉刷新和上拉加载的需求？这个组件正在欲高质量完成这个需求！该组件有以下特点：
 
-试验过多种方案后，得出使用swiper滑动处理体验最好的结论，并且在APP、H5、微信小程序效果都不错，交互体验基本一致。除了uniapp运行时依赖，没有任何第三方依赖。
+- 微信小程序、H5、、APP体验基本一致。
+- 使用swiper滑动实现下拉上拉，效果喜人；可以通过配置选择【自动】加载更多或者【手动上拉】加载更多。
+- 除了uniapp运行时依赖，没有任何第三方依赖。
+- 基于常用业务场景实现了一套开箱即用的规则；当然不喜欢也没有关系，使用配置和插槽二次封装也相当简单。
 
-由于使用swiper的transition事件获取滑动距离，这里的性能就由框架本身背书了。对于滑动距离变化和下拉/上拉状态的交互，这块需要操作dom，默认封装好的下拉/上拉场景没有使用wxs优化对dom的操作，需要进一步优化的同学也可以使用自定义slot进行处理。
+ps：由于使用swiper的transition事件获取滑动距离，这里的性能就由框架本身背书了。对于滑动距离变化和下拉/上拉状态的交互，这块需要操作dom，默认封装好的下拉/上拉场景没有使用wxs优化对dom的操作，需要进一步优化的同学也可以使用自定义slot进行处理。
 
 # 组件效果预览
 你有三种方式预览
@@ -46,10 +49,7 @@ import DimpleUniScroll from '@dimple-smile/uni-scroll'
 > 在pages/index/index.vue文件里能看到一个使用的栗子
 ### 参数
 [(Back to top)](#目录)
-<style> 
-table th:nth-of-type(2) { width: 180px }
-</style>
-| 参数名 | 意义 | 类型 | 默认值 | 说明 |
+| <img width="100px" /> 参数名 <img width="100px" /> | <img width="180px" /> 意义 <img width="180px" /> | 类型 | 默认值 | 说明 |
 | -| -| -| - | - |
 | height | 滚动容器的高度  | String | 100%| 默认100%，代表使用该组件的父元素必须具有高度。ps: 高度继承page的100%时，page需要设置height: 100%，page默认无高度。
 | background | 滚动容器的背景色 | String | #eeeeee | 这个背景色会和下拉/上拉时的背景色一致。 |
@@ -58,13 +58,20 @@ table th:nth-of-type(2) { width: 180px }
 | skip | 请求数据时跳过多少已加载的条数 | Number | -1 | 比如列表已经加载了20条数据，那么skip应为20。该参数偏业务，如不使用可以不设置，结果是无限加载，不会出现到底了。 |
 | total | 一共有多少条数据 | Number | -1 | 默认值不能设置为0，应在请求之后设置该值。该参数偏业务，如不使用可以不设置，结果是无限加载，不会出现到底了。 |
 | autoload | 滚到底部是否自动加载更多 | Boolean | true | 默认滚动到底部自动加载更多，设置为false之后，滚动到底部后需要上拉触发加载。 |
+| refresherText | 下拉过程显示的文本 | String | 下拉刷新 | 无 |
+| refresherActivedText | 下拉可刷新时显示的文本 | String | 松开刷新 | 无 |
+| loadmorerText | 上拉过程显示的文本 | String | 上拉加载 | 无 |
+| loadmorerActivedText | 上拉可加载时显示的文本 | String | 松开加载 | 无 |
+| loadingText | 加载中显示的文本 | String | 加载中... | 无 |
+| noDataText | 无数据时显示的文本 | String | 暂无数据 | 无 |
+| noMoreText | 无更多数据时显示的文本 | String | 到底了~ | 无 |
 
 注意：limit、skip、total三个参数配合可以得出，是否没有数据，出是否已经加载完数据。注意都要在请求之后再改变skip和total，默认值不要设置为0。
 
 ### 插槽
 [(Back to top)](#目录)
 
-| 参数名 | 意义 | 说明 |
+| <img width="100px" /> 参数名 <img width="100px" /> | <img width="180px" /> 意义 <img width="180px" /> | 说明 |
 | - | - | - |
 | refresher | 自定义下拉刷新 | 通过v-slot:refresher="{dy, threshold, loading}"获取自定义需要的数据。dy：下拉偏移值；threshold：下拉触发事件的阈值；loading：是否出于加载状态。|
 | loadmorer | 自定义上拉加载 | 通过v-slot:loadmorer="{dy, threshold, loading}"获取自定义需要的数据。dy：上拉拉偏移值；threshold：上拉拉触发事件的阈值；loading：是否出于加载状态。|
@@ -74,7 +81,7 @@ table th:nth-of-type(2) { width: 180px }
 
 ### 事件
 [(Back to top)](#目录)
-| 事件名 | 意义 | 说明 |
+| <img width="100px" /> 参数名 <img width="100px" /> | <img width="180px" /> 意义 <img width="180px" /> | 说明 |
 | - | - | - |
 | fetch | 下拉/上拉超过阈值之后触发的方法 | 使用者需要把更新列表的方法写在这个回调里，回调得到值是一个对象，对象里是一些可用参数。skip：见参数说明；limit：见参数说明；total：见参数说明；page：当前加载到的页码；loadmore：是否是上拉加载；stop：一个function，必须要手动调用stop()才会停止刷新/加载动作！所以要求对请求进行防呆处理，保证请求失败也会调用stop()。 |
 | transition | swiper组件的事件 | 无特殊需要一般无需理会。 |
