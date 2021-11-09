@@ -71,7 +71,7 @@ import DimpleUniScroll from '@dimple-smile/uni-scroll'
 ### 插槽
 [(Back to top)](#目录)
 
-| <img width="100px" /> 参数名 <img width="100px" /> | <img width="200px" /> 意义 <img width="200px" /> | 说明 |
+| 参数名 | <img width="200px" /> 意义 <img width="200px" /> | 说明 |
 | - | - | - |
 | refresher | 自定义下拉刷新 | 通过v-slot:refresher="{dy, threshold, loading}"获取自定义需要的数据。dy：下拉偏移值；threshold：下拉触发事件的阈值；loading：是否出于加载状态。|
 | loadmorer | 自定义上拉加载 | 通过v-slot:loadmorer="{dy, threshold, loading}"获取自定义需要的数据。dy：上拉拉偏移值；threshold：上拉拉触发事件的阈值；loading：是否出于加载状态。|
@@ -81,7 +81,7 @@ import DimpleUniScroll from '@dimple-smile/uni-scroll'
 
 ### 事件
 [(Back to top)](#目录)
-| <img width="100px" /> 参数名 <img width="100px" /> | <img width="400px" /> 意义 <img width="400px" /> | 说明 |
+| 参数名 | <img width="200px" /> 意义 <img width="200px" /> | 说明 |
 | - | - | - |
 | fetch | 下拉/上拉超过阈值之后触发的方法 | 使用者需要把更新列表的方法写在这个回调里，回调得到值是一个对象，对象里是一些可用参数。skip：见参数说明；limit：见参数说明；total：见参数说明；page：当前加载到的页码；loadmore：是否是上拉加载；stop：一个function，必须要手动调用stop()才会停止刷新/加载动作！所以要求对请求进行防呆处理，保证请求失败也会调用stop()。 |
 | transition | swiper组件的事件 | 无特殊需要一般无需理会。 |
