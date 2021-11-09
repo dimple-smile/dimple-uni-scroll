@@ -51,7 +51,7 @@ import DimpleUniScroll from '@dimple-smile/uni-scroll'
 ```
 <template>
   <view style="height: 400px">
-    <d-scroll @fetch="fetch">
+    <d-scroll :total="total" :skip="skip" @fetch="fetch">
       <view v-for="(item, index) in list" :key="index">{{ index }}</view>
     </d-scroll>
   </view>
