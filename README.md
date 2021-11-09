@@ -58,7 +58,7 @@ import DimpleUniScroll from '@dimple-smile/uni-scroll'
 </template>
 
 <script>
-import DScroll from '../../src/dimple-uni-scroll.vue'
+import DScroll from '@dimple-smile/uni-scroll'
 export default {
   components: { DScroll },
   data() {
