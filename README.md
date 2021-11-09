@@ -46,7 +46,51 @@ import DimpleUniScroll from '@dimple-smile/uni-scroll'
 # 使用说明
 [(Back to top)](#目录)
 
-> 在pages/index/index.vue文件里能看到一个使用的栗子
+下面是一个简单的使用例子
+> 在pages/index/index.vue文件里能看到预览使用的栗子
+```
+<template>
+  <view style="height: 400px">
+    <d-scroll @fetch="fetch">
+      <view v-for="(item, index) in list" :key="index">{{ index }}</view>
+    </d-scroll>
+  </view>
+</template>
+
+<script>
+import DScroll from '../../src/dimple-uni-scroll.vue'
+export default {
+  components: { DScroll },
+  data() {
+    return {
+      list: [],
+      total: -1,
+      skip: -1,
+    }
+  },
+  methods: {
+    async fetch(e) {
+      const { stop } = e
+      await this.getData(e)
+      stop()
+    },
+    async getData(options = {}) {
+      const { page = 1, skip = 0, limit = 20 } = options
+      const { total, data } = await new Promise((res) => setTimeout(() => res({ total: 100, data: Array(limit).fill('') }), 2000))
+      this.total = total
+      if (page === 1) this.list = []
+      this.list.push(...data)
+      this.skip = this.list.length
+    },
+  },
+  async mounted() {
+    uni.showLoading({ title: '加载中' })
+    await this.getData()
+    uni.hideLoading()
+  },
+}
+</script>
+```
 ### 参数
 [(Back to top)](#目录)
 | 参数名 | <img width="180px" /> 意义 <img width="180px" /> | 类型 | <img width="120px" /> 默认值 <img width="120px" /> | 说明 |
