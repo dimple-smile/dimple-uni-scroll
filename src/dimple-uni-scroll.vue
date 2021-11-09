@@ -10,11 +10,9 @@
               <view class="dimple-uni-scroll-refresher-slot-content">
                 <scroll-loader :progress="freshing ? 100 : (-dy / threshold) * 100" :spin="freshing"></scroll-loader>
                 <view style="width: 5px"></view>
-                <view>
-                  <template v-if="freshing"> {{ loadingText }} </template>
-                  <template v-else>
-                    {{ refresherActived ? refresherActivedText : refresherText }}
-                  </template>
+                <view v-if="freshing"> {{ loadingText }} </view>
+                <view v-else>
+                  {{ refresherActived ? refresherActivedText : refresherText }}
                 </view>
               </view>
             </view>
@@ -39,11 +37,9 @@
               <view class="dimple-uni-scroll-loadmorer-slot-content">
                 <scroll-loader :progress="loading ? 100 : (dy / threshold) * 100" :spin="loading"></scroll-loader>
                 <view style="width: 5px"></view>
-                <view>
-                  <template v-if="loading"> {{ loadingText }} </template>
-                  <template v-else>
-                    {{ loadmorerActived ? loadmorerActivedText : loadmorerText }}
-                  </template>
+                <view v-if="loading"> {{ loadingText }} </view>
+                <view v-else>
+                  {{ loadmorerActived ? loadmorerActivedText : loadmorerText }}
                 </view>
               </view>
               <view></view>
@@ -56,7 +52,7 @@
 </template>
 
 <script>
-import ScrollLoader from './dimple-uni-scroll-loader.vue'
+import ScrollLoader from './flower-progress'
 export default {
   components: { ScrollLoader },
   props: {
@@ -73,7 +69,7 @@ export default {
     loadmorerActivedText: { type: String, default: '松开加载' },
     loadingText: { type: String, default: '加载中...' },
     noDataText: { type: String, default: '暂无数据' },
-    noMoreText: { type: String, default: '到底了~' },
+    noMoreText: { type: String, default: '没有更多数据了' },
   },
   data() {
     return {

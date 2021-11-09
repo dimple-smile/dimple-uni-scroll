@@ -64,7 +64,7 @@ import DimpleUniScroll from '@dimple-smile/uni-scroll'
 | loadmorerActivedText | 上拉可加载时显示的文本 | String | 松开加载 | 无 |
 | loadingText | 加载中显示的文本 | String | 加载中... | 无 |
 | noDataText | 无数据时显示的文本 | String | 暂无数据 | 无 |
-| noMoreText | 无更多数据时显示的文本 | String | 到底了~ | 无 |
+| noMoreText | 无更多数据时显示的文本 | String | 没有更多数据了| 无 |
 
 注意：limit、skip、total三个参数配合可以得出，是否没有数据，出是否已经加载完数据。注意都要在请求之后再改变skip和total，默认值不要设置为0。
 
