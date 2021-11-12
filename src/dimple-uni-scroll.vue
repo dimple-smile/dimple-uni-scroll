@@ -146,7 +146,7 @@ export default {
         stop: this.stop,
         skip: this.skip,
         limit: this.limit,
-        page: currentPage + 1,
+        page: currentPage,
         total: this.total,
       })
     },
