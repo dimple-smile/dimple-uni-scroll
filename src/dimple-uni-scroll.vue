@@ -25,11 +25,11 @@
         </view>
         <scroll-view class="dimple-uni-scroll" scroll-y :style="{ background: background }" @scroll="handleScroll">
           <view class="dimple-uni-scroll-content">
-            <slot v-if="isNoData" name="no-data">
+            <slot v-if="isNoData" name="noData">
               <view class="dimple-uni-scroll-no-data">{{ noDataText }}</view>
             </slot>
             <slot></slot>
-            <slot v-if="isNoMore" name="no-more">
+            <slot v-if="isNoMore" name="noMore">
               <view class="dimple-uni-scroll-no-more">{{ noMoreText }}</view>
             </slot>
           </view>
@@ -106,6 +106,7 @@ export default {
       return this.total === 0 && !this.freshing
     },
     isNoMore() {
+      if (this.isNoData || this.freshing) return false
       if (this.total < 0 || this.skip < 0) return false
       return this.total <= this.skip && !this.loading
     },

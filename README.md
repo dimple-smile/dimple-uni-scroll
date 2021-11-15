@@ -109,6 +109,7 @@ export default {
 | loadingText | 加载中显示的文本 | String | 加载中... | 无 |
 | noDataText | 无数据时显示的文本 | String | 暂无数据 | 无 |
 | noMoreText | 无更多数据时显示的文本 | String | 没有更多数据了| 无 |
+| loaderSize | loader图标大小 | Number | 25 | 无 |
 
 注意：limit、skip、total三个参数配合可以得出，是否没有数据，出是否已经加载完数据。注意都要在请求之后再改变skip和total，默认值不要设置为0。
 
@@ -119,8 +120,8 @@ export default {
 | - | - | - |
 | refresher | 自定义下拉刷新 | 通过v-slot:refresher="{dy, threshold, loading}"获取自定义需要的数据。dy：下拉偏移值；threshold：下拉触发事件的阈值；loading：是否出于加载状态。|
 | loadmorer | 自定义上拉加载 | 通过v-slot:loadmorer="{dy, threshold, loading}"获取自定义需要的数据。dy：上拉拉偏移值；threshold：上拉拉触发事件的阈值；loading：是否出于加载状态。|
-| no-data | 无数据时的内容 | 需要设置skip和total来配合判断。 |
-| no-more | 到底时的内容 | 需要设置skip和total来配合判断。 |
+| noData | 无数据时的内容 | 需要设置skip和total来配合判断。 |
+| noMore | 到底时的内容 | 需要设置skip和total来配合判断。 |
 | 默认 | 用来放置内容 | 无
 
 ### 事件
