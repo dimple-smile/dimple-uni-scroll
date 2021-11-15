@@ -64,8 +64,8 @@ export default {
   data() {
     return {
       list: [],
-      total: -1,
-      skip: -1,
+      total: -1, // 默认值不能设置为0，初始值为0时无法判断是 一开始就无数据 还是 请求之后为无数据
+      skip: -1, // 默认值不能设置为0，理由同上
     }
   },
   methods: {
