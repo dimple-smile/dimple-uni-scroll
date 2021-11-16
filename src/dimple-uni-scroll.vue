@@ -181,13 +181,20 @@ export default {
         intersectionRatio > 0 && this.loadmore()
       })
     },
+    reset() {
+      this.skip = -1
+      this.total = -1
+      this.freshing = false
+      this.loading = false
+      this.dy = 0
+    },
   },
   mounted() {
     this.getSwiperHeight()
     this.autoload && this.setAutoloadObserver()
   },
   onUnload() {
-    this.autoloadObserver?.disconnect()
+    this.autoloadObserver && this.autoloadObserver.disconnect()
   },
 }
 </script>
@@ -223,6 +230,9 @@ export default {
 
 .dimple-uni-scroll {
   height: 100%;
+}
+.dimple-uni-scroll-content {
+  min-height: 100%;
 }
 .dimple-uni-scroll-autoload-flag {
   height: 1px;
