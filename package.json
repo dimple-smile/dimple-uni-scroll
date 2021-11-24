@@ -1,21 +1,9 @@
 {
-  "name": "@dimple-smile/uni-scroll",
-  "version": "2.0.0",
+  "name": "dimple-uni-scroll",
+  "version": "0.0.0",
   "description": "用于uniapp的滚动容器组件，封装常见业务场景，支持自定义配置。",
-  "main": "/src/components/dimple-uni-scroll.vue",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dimple-smile/dimple-uni-scroll.git"
-  },
-  "keywords": ["uniapp", "滚动列表组件", "下拉刷新", "到底自动加载"],
-  "author": "dimple-smile",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/dimple-smile/dimple-uni-scroll/issues"
-  },
-  "homepage": "https://github.com/dimple-smile/dimple-uni-scroll#readme",
+  "private": true,
   "scripts": {
-    "public": "npm publish --access public",
     "dev": "npm run dev:h5",
     "build": "npm run build:h5",
     "build:app-plus": "cross-env NODE_ENV=production UNI_PLATFORM=app-plus vue-cli-service uni-build",
@@ -73,6 +61,7 @@
     "@dcloudio/uni-quickapp-native": "^2.0.0-32920211122002",
     "@dcloudio/uni-quickapp-webview": "^2.0.0-32920211122002",
     "@dcloudio/uni-stat": "^2.0.0-32920211122002",
+    "@dimple-smile/uni-scroll": "^2.0.2",
     "@vue/shared": "^3.0.0",
     "core-js": "^3.6.5",
     "flyio": "^0.6.2",
@@ -103,7 +92,10 @@
     "postcss-comment": "^2.0.0",
     "vue-template-compiler": "^2.6.11"
   },
-  "browserslist": ["Android >= 4.4", "ios >= 9"],
+  "browserslist": [
+    "Android >= 4.4",
+    "ios >= 9"
+  ],
   "uni-app": {
     "scripts": {}
   }

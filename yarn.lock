@@ -1156,6 +1156,11 @@
     merge "^1.2.1"
     strip-json-comments "^2.0.1"
 
+"@dimple-smile/uni-scroll@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@dimple-smile/uni-scroll/-/uni-scroll-2.0.2.tgz#94e96478e250c2b9a6149fa852d9563ba26dddec"
+  integrity sha512-MASpCTuJHrC3rt6Zsy2an2U3dZDJAR07WCDMwbM89bWGtYoS2mFM1sPg6opZ5pkZuglKF6EO9rZpWLZtQV3/zg==
+
 "@hap-toolkit/aaptjs@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@hap-toolkit/aaptjs/-/aaptjs-1.0.0.tgz#460d45a846c0b786a421c82ce25fcd9fff0928e6"

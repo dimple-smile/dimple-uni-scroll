@@ -1,0 +1,20 @@
+{
+  "name": "@dimple-smile/uni-scroll",
+  "version": "2.0.2",
+  "description": "用于uniapp的滚动容器组件，封装常见业务场景，支持自定义配置。",
+  "main": "/dimple-uni-scroll.vue",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dimple-smile/dimple-uni-scroll.git"
+  },
+  "keywords": ["uniapp", "滚动列表组件", "下拉刷新", "到底自动加载"],
+  "author": "dimple-smile",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dimple-smile/dimple-uni-scroll/issues"
+  },
+  "homepage": "https://github.com/dimple-smile/dimple-uni-scroll#readme",
+  "scripts": {
+    "public": "npm publish --access public"
+  }
+}
