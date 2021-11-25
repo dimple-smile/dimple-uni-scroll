@@ -118,8 +118,8 @@ export default {
     noMoreText: { type: String, default: '没有更多数据了' },
     loaderSize: { type: Number, default: 25 },
     disabled: { type: Boolean, default: false },
-    noData: { type: [Boolean, String], default: '' },
-    noMore: { type: [Boolean, String], default: '' },
+    noData: { type: [Boolean, Number], default: -1 },
+    noMore: { type: [Boolean, Number], default: -1 },
   },
   data() {
     return {
@@ -130,13 +130,13 @@ export default {
   },
   computed: {
     isNoData() {
-      if ([true, false].includes(this.noData)) return this.noData
+      if (this.noData === true || this.noData === false) return this.noData
       if (this.freshing || this.loading || this.disabled) return false
       if (this.total < 0 || this.skip < 0) return false
       return this.total === 0
     },
     isNoMore() {
-      if ([true, false].includes(this.noMore)) return this.noMore
+      if (this.noMore === true || this.noMore === false) return this.noData
       if (this.isNoData || this.freshing || this.loading || this.disabled) return false
       if (this.total < 0 || this.skip < 0) return false
       return this.total <= this.skip
@@ -200,7 +200,7 @@ export default {
 
 <style scoped>
 .dimple-uni-scroll {
-  height: 100%;
+  overflow: auto;
   position: relative;
 }
 

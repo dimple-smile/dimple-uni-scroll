@@ -20,7 +20,8 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
-..hbuilderx
+.hbuilderx
+src/.hbuilderx
 dist/dev
 dist/build/.automator
 dist/build/*

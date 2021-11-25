@@ -1,10 +1,13 @@
 <template>
   <view class="dimple-uni-scroll-demo">
-    <dimple-uni-scroll :total="total" :skip="skip" :limit="20" @fetch="fetch">
-      <view class="scroll-content">
-        <view v-for="(item, index) in list" :key="index" class="scroll-item">{{ index + 1 }}</view>
-      </view>
-    </dimple-uni-scroll>
+    <view class="header"> header </view>
+    <view class="content">
+      <dimple-uni-scroll :total="total" :skip="skip" @fetch="fetch">
+        <view class="scroll-content">
+          <view v-for="(item, index) in list" :key="index" class="scroll-item">{{ index + 1 }}</view>
+        </view>
+      </dimple-uni-scroll>
+    </view>
   </view>
 </template>
 
@@ -55,6 +58,15 @@ export default {
 .dimple-uni-scroll-demo {
   /* 如果这里设置了继承page的100%，需要保证page设置了height: 100% */
   height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  padding: 20px;
+}
+.content {
+  flex: 1;
+  overflow: auto;
 }
 .scroll-content {
   padding: 20px;

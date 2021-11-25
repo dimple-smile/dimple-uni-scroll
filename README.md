@@ -44,6 +44,8 @@ import DimpleUniScroll from '@dimple-smile/uni-scroll'
 [(Back to top)](#目录)
 
 下面是一个简单的使用例子
+
+注意：如果使用父元素使用flex:1设置高度，需要添加overflow: auto属性，让flex:1的元素变成滚动容器
 > 在src/pages/index/index.vue文件里能看到预览使用的栗子
 ```
 <template>
