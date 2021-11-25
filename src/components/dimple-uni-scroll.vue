@@ -92,8 +92,8 @@ module.exports = {
         <view class="dimple-uni-scroll-no-more">{{ noMoreText }}</view>
       </slot>
     </view>
-    <view v-show="!isNoMore" class="dimple-uni-scroll-loadmorer">
-      <slot v-if="loading" name="loadmorer" :threshold="threshold" :loading="loading">
+    <view class="dimple-uni-scroll-loadmorer" :class="{ 'dimple-uni-scroll-loadmorer-hidden': isNoMore }">
+      <slot v-if="!isNoMore && loading" name="loadmorer" :threshold="threshold" :loading="loading">
         <view class="u-loading-flower spin" :style="{ height: loaderSize + 'px', width: loaderSize + 'px' }"> </view>
         <view style="width: 5px"></view>
         <view>{{ loadingText }}</view>
@@ -136,7 +136,7 @@ export default {
       return this.total === 0
     },
     isNoMore() {
-      if (this.noMore === true || this.noMore === false) return this.noData
+      if (this.noMore === true || this.noMore === false) return this.noMore
       if (this.isNoData || this.freshing || this.loading || this.disabled) return false
       if (this.total < 0 || this.skip < 0) return false
       return this.total <= this.skip
@@ -233,6 +233,11 @@ export default {
   color: #aaa;
   font-size: 14px;
   min-height: 50px;
+}
+
+.dimple-uni-scroll-loadmorer-hidden {
+  height: 0px;
+  min-height: 0px;
 }
 
 .dimple-uni-scroll-no-data {
