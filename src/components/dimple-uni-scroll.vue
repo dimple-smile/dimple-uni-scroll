@@ -66,16 +66,9 @@ module.exports = {
     @scroll="handleScroll"
   >
     <view slot="refresher" class="dimple-uni-scroll-refresher">
-      <view
-        class="u-loading-flower refresher-icon"
-        :class="{ spin: freshing }"
-        :style="{
-          height: loaderSize + 'px',
-          width: loaderSize + 'px',
-        }"
-      ></view>
+      <view class="u-loading-flower refresher-icon" :class="{ spin: freshing }" :style="{ height: loaderSize + 'px', width: loaderSize + 'px' }"></view>
       <view style="width: 5px"></view>
-      <view v-if="freshing">{{ loadingText }}</view>
+      <view v-if="freshing">{{ freshingText }}</view>
       <view class="dimple-uni-scroll-refresher-text">
         {{ refresherText }}
       </view>
@@ -84,16 +77,19 @@ module.exports = {
       </view>
     </view>
     <view class="dimple-uni-scroll-content">
+      <slot v-if="error && !freshing" name="error">
+        <view class="dimple-uni-scroll-no-data"> {{errorText}} </view>
+      </slot>
       <slot v-if="isNoData" name="noData">
         <view class="dimple-uni-scroll-no-data">{{ noDataText }}</view>
       </slot>
-      <slot></slot>
-      <slot v-if="!isNoData && isNoMore" name="noMore">
+      <slot v-if="!error"></slot>
+      <slot v-if="isNoMore" name="noMore">
         <view class="dimple-uni-scroll-no-more">{{ noMoreText }}</view>
       </slot>
     </view>
-    <view class="dimple-uni-scroll-loadmorer" :class="{ 'dimple-uni-scroll-loadmorer-hidden': isNoMore }">
-      <slot v-if="!isNoMore && loading" name="loadmorer" :threshold="threshold" :loading="loading">
+    <view class="dimple-uni-scroll-loadmorer" :class="{ 'dimple-uni-scroll-loadmorer-hidden': isNoMore || error }">
+      <slot v-if="!isNoMore && loading && !error" name="loadmorer" :threshold="threshold" :loading="loading">
         <view class="u-loading-flower spin" :style="{ height: loaderSize + 'px', width: loaderSize + 'px' }"> </view>
         <view style="width: 5px"></view>
         <view>{{ loadingText }}</view>
@@ -113,6 +109,7 @@ export default {
     total: { default: 0 },
     refresherText: { type: String, default: '下拉刷新' },
     refresherActivedText: { type: String, default: '松开刷新' },
+    freshingText: { type: String, default: '刷新中...' },
     loadingText: { type: String, default: '加载中...' },
     noDataText: { type: String, default: '暂无数据' },
     noMoreText: { type: String, default: '没有更多数据了' },
@@ -120,6 +117,8 @@ export default {
     disabled: { type: Boolean, default: false },
     noData: { type: [Boolean, Number], default: -1 },
     noMore: { type: [Boolean, Number], default: -1 },
+    error: { type: Boolean, default: false },
+    errorText: { type: String, default: '服务异常，请稍后刷新重试' },
   },
   data() {
     return {
@@ -130,12 +129,14 @@ export default {
   },
   computed: {
     isNoData() {
+      if (this.error) return false
       if (this.noData === true || this.noData === false) return this.noData
       if (this.freshing || this.loading || this.disabled) return false
       if (this.total < 0 || this.skip < 0) return false
       return this.total === 0
     },
     isNoMore() {
+      if (this.error) return false
       if (this.noMore === true || this.noMore === false) return this.noMore
       if (this.isNoData || this.freshing || this.loading || this.disabled) return false
       if (this.total < 0 || this.skip < 0) return false
@@ -182,6 +183,7 @@ export default {
       this.triggered = false
     },
     addObserver() {
+      // loadmorer监听
       this.autoloadObserver = uni.createIntersectionObserver(this)
       this.autoloadObserver.relativeTo('.dimple-uni-scroll').observe('.dimple-uni-scroll-loadmorer', ({ intersectionRatio, time }) => intersectionRatio > 0 && this.loadmore())
     },

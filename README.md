@@ -109,6 +109,8 @@ export default {
 | disabled | 是否禁用下拉和自动加载 | Boolean | false | 无 |
 | noData | 是否为无数据状态 | Boolean,String | '' | 只有设置为布尔值才会生效 |
 | noMore | 是否为没有更多数据状态 | Boolean,String | '' | 只有设置为布尔值才会生效 |
+| error | 是否为错误状态 | Boolean | false | 设置为true时会覆盖默认slot，为防止组件体积过大和太业务，根据业务进行slot效果最好 |
+| errorText | 错误状态时默认显示的文本 | String | 服务异常，请稍后刷新重试 | 设置slot后会覆盖 |
 
 注意：limit、skip、total三个参数配合可以得出，是否没有数据 以及 是否已经加载完数据。注意都要在请求之后再改变skip和total，默认值不要设置为0。当然可以用noData和noMore自行控制。
 
@@ -120,6 +122,7 @@ export default {
 | loadmorer | 自定义上拉加载 | 通过v-slot:loadmorer="{ threshold, loading}"获取自定义需要的数据。threshold：上拉拉触发事件的阈值；loading：是否处于加载状态。|
 | noData | 无数据时的内容 | 需要设置skip和total来配合判断。 |
 | noMore | 到底时的内容 | 需要设置skip和total来配合判断。 |
+| error | 错误状态的内容 | 如果设置了error状态，会覆盖默认slot |
 | 默认 | 用来放置内容 | 无
 
 ### 事件
