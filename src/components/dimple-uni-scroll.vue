@@ -53,7 +53,7 @@ module.exports = {
     class="dimple-uni-scroll"
     :style="{ height: height, background: background }"
     scroll-y
-    refresher-enabled
+    :refresher-enabled="!disabled"
     :refresher-threshold="threshold"
     :refresher-triggered="triggered"
     :refresher-background="background"
@@ -88,7 +88,7 @@ module.exports = {
         <view class="dimple-uni-scroll-no-more">{{ noMoreText }}</view>
       </slot>
     </view>
-    <view class="dimple-uni-scroll-loadmorer" :class="{ 'dimple-uni-scroll-loadmorer-hidden': isNoMore || error }">
+    <view class="dimple-uni-scroll-loadmorer" :class="{ 'dimple-uni-scroll-loadmorer-hidden': isNoMore || error || disabled }">
       <slot v-if="!isNoMore && loading && !error" name="loadmorer" :threshold="threshold" :loading="loading">
         <view class="u-loading-flower spin" :style="{ height: loaderSize + 'px', width: loaderSize + 'px' }"> </view>
         <view style="width: 5px"></view>
