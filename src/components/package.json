@@ -1,6 +1,6 @@
 {
   "name": "@dimple-smile/uni-scroll",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "用于uniapp的滚动容器组件，封装常见业务场景，支持自定义配置。",
   "main": "/dimple-uni-scroll.vue",
   "repository": {

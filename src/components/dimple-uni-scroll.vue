@@ -148,6 +148,11 @@ export default {
       return this.total <= this.skip
     },
   },
+  watch: {
+    total(newValue, oldValue) {
+      if (newValue < oldValue) this.setScrollTop(0)
+    },
+  },
   methods: {
     onRestore() {
       this.triggered = 'restore' // 需要重置
@@ -221,6 +226,7 @@ export default {
       // loadmorer监听
       this.autoloadObserver = uni.createIntersectionObserver(this)
       this.autoloadObserver.relativeTo('.dimple-uni-scroll').observe('.dimple-uni-scroll-loadmorer', ({ intersectionRatio, time }) => {
+        if (this.total < 0 || this.skip < 0) return // 防止重置时触发loadmore
         const visible = intersectionRatio > 0
         visible && this.loadmore()
       })
@@ -278,7 +284,7 @@ export default {
   min-height: 50px;
   margin-top: 10px;
 
-  background: red;
+  /* background: red; */
 }
 
 .dimple-uni-scroll-loadmorer-hidden {

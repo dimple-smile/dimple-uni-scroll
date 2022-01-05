@@ -2,11 +2,11 @@
   <view class="dimple-uni-scroll-demo">
     <!-- <view class="header"> header </view> -->
     <!-- <view class="content"> -->
-      <dimple-uni-scroll :total="total" :skip="skip" :limit="2" @fetch="fetch">
-        <view class="scroll-content">
-          <view v-for="(item, index) in list" :key="index" class="scroll-item">{{ index + 1 }}</view>
-        </view>
-      </dimple-uni-scroll>
+    <dimple-uni-scroll :total="total" :skip="skip" :limit="limit" @fetch="fetch">
+      <view class="scroll-content">
+        <view v-for="(item, index) in list" :key="index" class="scroll-item">{{ index + 1 }}</view>
+      </view>
+    </dimple-uni-scroll>
     <!-- </view> -->
     <!-- <view class="footer"> footer </view> -->
   </view>
@@ -21,6 +21,7 @@ export default {
       list: [],
       total: -1,
       skip: -1,
+      limit: 3,
     }
   },
   methods: {
@@ -32,7 +33,7 @@ export default {
       stop()
     },
     async getData(options = {}) {
-      const { page = 1, skip = 0, limit = 2 } = options
+      const { page = 1, skip = 0, limit = this.limit } = options
       const res = await new Promise((res) =>
         setTimeout(() => {
           const data = Array(limit)
