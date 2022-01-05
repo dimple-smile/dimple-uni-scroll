@@ -59,6 +59,7 @@ module.exports = {
     :refresher-background="background"
     refresher-default-style="none"
     :data-threshold="threshold"
+    :scroll-top="scrollTop"
     @refresherpulling="refresh.onPulling"
     @refresherrefresh="refresh.onRefresh"
     @refresherrestore="onRestore"
@@ -78,12 +79,15 @@ module.exports = {
     </view>
     <view class="dimple-uni-scroll-content">
       <slot v-if="error && !freshing" name="error">
-        <view class="dimple-uni-scroll-no-data"> {{errorText}} </view>
+        <view class="dimple-uni-scroll-no-data"> {{ errorText }} </view>
       </slot>
       <slot v-if="isNoData" name="noData">
         <view class="dimple-uni-scroll-no-data">{{ noDataText }}</view>
       </slot>
-      <slot v-if="!error"></slot>
+
+      <view v-if="!error" class="dimple-uni-scroll-content-slot">
+        <slot></slot>
+      </view>
       <slot v-if="isNoMore" name="noMore">
         <view class="dimple-uni-scroll-no-more">{{ noMoreText }}</view>
       </slot>
@@ -125,6 +129,7 @@ export default {
       triggered: false,
       freshing: false,
       loading: false,
+      scrollTop: 0,
     }
   },
   computed: {
@@ -149,6 +154,7 @@ export default {
     },
     handleScroll(e) {
       this.$emit('scroll', e)
+      this.setScrollTop(e.detail.scrollTop)
     },
     async fetch() {
       if (this.loading || this.disabled) return
@@ -181,11 +187,43 @@ export default {
       this.freshing = false
       this.loading = false
       this.triggered = false
+      Promise.all([this.getContainerRect(), this.getScrollSlotContentRect()]).then((result) => {
+        const [containerRect, contentRect] = result
+        const containerHeight = containerRect.height
+        const contentHeight = contentRect.height
+        if (contentHeight <= containerHeight) {
+          this.setScrollTop(0)
+        }
+      })
+    },
+    setScrollTop(value) {
+      this.scrollTop = value
+    },
+    getContainerRect() {
+      const query = uni.createSelectorQuery().in(this)
+      return new Promise((res) => {
+        query
+          .select('.dimple-uni-scroll')
+          .boundingClientRect((data) => res(data))
+          .exec()
+      })
+    },
+    getScrollSlotContentRect() {
+      const query = uni.createSelectorQuery().in(this)
+      return new Promise((res) => {
+        query
+          .select('.dimple-uni-scroll-content-slot')
+          .boundingClientRect((data) => res(data))
+          .exec()
+      })
     },
     addObserver() {
       // loadmorer监听
       this.autoloadObserver = uni.createIntersectionObserver(this)
-      this.autoloadObserver.relativeTo('.dimple-uni-scroll').observe('.dimple-uni-scroll-loadmorer', ({ intersectionRatio, time }) => intersectionRatio > 0 && this.loadmore())
+      this.autoloadObserver.relativeTo('.dimple-uni-scroll').observe('.dimple-uni-scroll-loadmorer', ({ intersectionRatio, time }) => {
+        const visible = intersectionRatio > 0
+        visible && this.loadmore()
+      })
     },
     removeObserver() {
       this.autoloadObserver && this.autoloadObserver.disconnect()
@@ -225,6 +263,9 @@ export default {
   min-height: 100%;
 }
 
+.dimple-uni-scroll-content-slot {
+}
+
 .dimple-uni-scroll-loadmorer {
   width: 100%;
   text-align: center;
@@ -235,11 +276,15 @@ export default {
   color: #aaa;
   font-size: 14px;
   min-height: 50px;
+  margin-top: 10px;
+
+  background: red;
 }
 
 .dimple-uni-scroll-loadmorer-hidden {
   height: 0px;
   min-height: 0px;
+  margin-top: 0px;
 }
 
 .dimple-uni-scroll-no-data {
