@@ -109,8 +109,8 @@ export default {
     background: { type: String, default: '#eeeeee' },
     threshold: { type: Number, default: 80 },
     limit: { type: Number, default: 20 },
-    skip: { type: Number, default: 0 },
-    total: { default: 0 },
+    skip: { type: Number, default: -1 },
+    total: { type: Number, default: -1 },
     refresherText: { type: String, default: '下拉刷新' },
     refresherActivedText: { type: String, default: '松开刷新' },
     freshingText: { type: String, default: '刷新中...' },
@@ -150,7 +150,7 @@ export default {
   },
   watch: {
     total(newValue, oldValue) {
-      if (newValue < oldValue) this.setScrollTop(0)
+      if (oldValue > -1 && newValue === -1) this.setScrollTop(0)
     },
   },
   methods: {
@@ -226,7 +226,6 @@ export default {
       // loadmorer监听
       this.autoloadObserver = uni.createIntersectionObserver(this)
       this.autoloadObserver.relativeTo('.dimple-uni-scroll').observe('.dimple-uni-scroll-loadmorer', ({ intersectionRatio, time }) => {
-        if (this.total < 0 || this.skip < 0) return // 防止重置时触发loadmore
         const visible = intersectionRatio > 0
         visible && this.loadmore()
       })
