@@ -130,6 +130,7 @@ export default {
       freshing: false,
       loading: false,
       scrollTop: 0,
+      oldScrollTop: 0,
     }
   },
   computed: {
@@ -159,7 +160,8 @@ export default {
     },
     handleScroll(e) {
       this.$emit('scroll', e)
-      this.setScrollTop(e.detail.scrollTop)
+      this.oldScrollTop = e.detail.scrollTop
+      // this.setScrollTop(e.detail.scrollTop)
     },
     async fetch() {
       if (this.loading || this.disabled) return
@@ -202,7 +204,10 @@ export default {
       })
     },
     setScrollTop(value) {
-      this.scrollTop = value
+      this.scrollTop = this.oldScrollTop
+      this.$nextTick(() => {
+        this.scrollTop = value
+      })
     },
     getContainerRect() {
       const query = uni.createSelectorQuery().in(this)
@@ -226,6 +231,7 @@ export default {
       // loadmorer监听
       this.autoloadObserver = uni.createIntersectionObserver(this)
       this.autoloadObserver.relativeTo('.dimple-uni-scroll').observe('.dimple-uni-scroll-loadmorer', ({ intersectionRatio, time }) => {
+        if (this.isNoMore) return
         const visible = intersectionRatio > 0
         visible && this.loadmore()
       })
