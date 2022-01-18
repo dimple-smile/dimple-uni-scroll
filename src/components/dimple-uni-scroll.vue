@@ -92,7 +92,7 @@ module.exports = {
         <view class="dimple-uni-scroll-no-more">{{ noMoreText }}</view>
       </slot>
     </view>
-    <view class="dimple-uni-scroll-loadmorer" :class="{ 'dimple-uni-scroll-loadmorer-hidden': isNoMore || error || disabled }">
+    <view class="dimple-uni-scroll-loadmorer" :class="{ 'dimple-uni-scroll-loadmorer-hidden': isNoData || isNoMore || error || disabled }">
       <slot v-if="!isNoMore && loading && !error" name="loadmorer" :threshold="threshold" :loading="loading">
         <view class="u-loading-flower spin" :style="{ height: loaderSize + 'px', width: loaderSize + 'px' }"> </view>
         <view style="width: 5px"></view>
@@ -198,7 +198,7 @@ export default {
         const [containerRect, contentRect] = result
         const containerHeight = containerRect.height
         const contentHeight = contentRect.height
-        if (contentHeight <= containerHeight) {
+        if (contentHeight <= containerHeight && !this.isNoData && !this.isNoMore) {
           this.setScrollTop(0)
         }
       })
@@ -231,7 +231,7 @@ export default {
       // loadmorer监听
       this.autoloadObserver = uni.createIntersectionObserver(this)
       this.autoloadObserver.relativeTo('.dimple-uni-scroll').observe('.dimple-uni-scroll-loadmorer', ({ intersectionRatio, time }) => {
-        if (this.isNoMore) return
+        if (this.isNoMore || this.isNoData) return
         const visible = intersectionRatio > 0
         visible && this.loadmore()
       })
