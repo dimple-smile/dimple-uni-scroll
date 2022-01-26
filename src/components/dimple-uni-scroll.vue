@@ -56,7 +56,7 @@ module.exports = {
     :refresher-enabled="!disabled"
     :refresher-threshold="threshold"
     :refresher-triggered="triggered"
-    :refresher-background="background"
+    :refresher-background="refresherBackground"
     refresher-default-style="none"
     :data-threshold="threshold"
     :scroll-top="scrollTop"
@@ -66,7 +66,7 @@ module.exports = {
     @refresherabort="refresh.onAbort"
     @scroll="handleScroll"
   >
-    <view slot="refresher" class="dimple-uni-scroll-refresher">
+    <view slot="refresher" class="dimple-uni-scroll-refresher" :style="{ background: refresherBackground }">
       <view class="u-loading-flower refresher-icon" :class="{ spin: freshing }" :style="{ height: loaderSize + 'px', width: loaderSize + 'px' }"></view>
       <view style="width: 5px"></view>
       <view v-if="freshing">{{ freshingText }}</view>
@@ -111,6 +111,7 @@ export default {
     limit: { type: Number, default: 20 },
     skip: { type: Number, default: -1 },
     total: { type: Number, default: -1 },
+    refresherBackground: { type: String, default: '#eeeeee' },
     refresherText: { type: String, default: '下拉刷新' },
     refresherActivedText: { type: String, default: '松开刷新' },
     freshingText: { type: String, default: '刷新中...' },
