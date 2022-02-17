@@ -53,7 +53,7 @@ module.exports = {
     class="dimple-uni-scroll"
     :style="{ height: height, background: background }"
     scroll-y
-    :refresher-enabled="refresherDisabled ? false : !disabled"
+    :refresher-enabled="refreshDisabled ? false : !disabled"
     :refresher-threshold="threshold"
     :refresher-triggered="triggered"
     :refresher-background="refresherBackground"
@@ -120,7 +120,7 @@ export default {
     noMoreText: { type: String, default: '没有更多数据了' },
     loaderSize: { type: Number, default: 25 },
     disabled: { type: Boolean, default: false },
-    refresherDisabled: { type: Boolean, default: false },
+    refreshDisabled: { type: Boolean, default: false },
     loadmoreDisabled: { type: Boolean, default: false },
     noData: { type: [Boolean, Number], default: -1 },
     noMore: { type: [Boolean, Number], default: -1 },
@@ -140,7 +140,7 @@ export default {
     isNoData() {
       if (this.error) return false
       if (this.noData === true || this.noData === false) return this.noData
-      if (this.freshing || this.loading || this.disabled || this.refresherDisabled) return false
+      if (this.freshing || this.loading || this.disabled || this.refreshDisabled) return false
       if (this.total < 0 || this.skip < 0) return false
       return this.total === 0
     },
@@ -167,7 +167,7 @@ export default {
       // this.setScrollTop(e.detail.scrollTop)
     },
     async fetch() {
-      if (this.loading || this.disabled || this.refresherDisabled) return
+      if (this.loading || this.disabled || this.refreshDisabled) return
       this.triggered = true
       this.freshing = true
       const currentPage = 1
