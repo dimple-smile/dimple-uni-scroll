@@ -53,7 +53,7 @@ module.exports = {
     class="dimple-uni-scroll"
     :style="{ height: height, background: background }"
     scroll-y
-    :refresher-enabled="!disabled"
+    :refresher-enabled="refresherDisabled ? false : !disabled"
     :refresher-threshold="threshold"
     :refresher-triggered="triggered"
     :refresher-background="refresherBackground"
@@ -92,7 +92,7 @@ module.exports = {
         <view class="dimple-uni-scroll-no-more">{{ noMoreText }}</view>
       </slot>
     </view>
-    <view class="dimple-uni-scroll-loadmorer" :class="{ 'dimple-uni-scroll-loadmorer-hidden': isNoData || isNoMore || error || disabled }">
+    <view class="dimple-uni-scroll-loadmorer" :class="{ 'dimple-uni-scroll-loadmorer-hidden': isNoData || isNoMore || error || disabled || loadmoreDisabled}">
       <slot v-if="!isNoMore && loading && !error" name="loadmorer" :threshold="threshold" :loading="loading">
         <view class="u-loading-flower spin" :style="{ height: loaderSize + 'px', width: loaderSize + 'px' }"> </view>
         <view style="width: 5px"></view>
@@ -120,6 +120,8 @@ export default {
     noMoreText: { type: String, default: '没有更多数据了' },
     loaderSize: { type: Number, default: 25 },
     disabled: { type: Boolean, default: false },
+    refresherDisabled: { type: Boolean, default: false },
+    loadmoreDisabled: { type: Boolean, default: false },
     noData: { type: [Boolean, Number], default: -1 },
     noMore: { type: [Boolean, Number], default: -1 },
     error: { type: Boolean, default: false },
@@ -138,14 +140,14 @@ export default {
     isNoData() {
       if (this.error) return false
       if (this.noData === true || this.noData === false) return this.noData
-      if (this.freshing || this.loading || this.disabled) return false
+      if (this.freshing || this.loading || this.disabled || this.refresherDisabled) return false
       if (this.total < 0 || this.skip < 0) return false
       return this.total === 0
     },
     isNoMore() {
       if (this.error) return false
       if (this.noMore === true || this.noMore === false) return this.noMore
-      if (this.isNoData || this.freshing || this.loading || this.disabled) return false
+      if (this.isNoData || this.freshing || this.loading || this.disabled || this.loadmoreDisabled) return false
       if (this.total < 0 || this.skip < 0) return false
       return this.total <= this.skip
     },
@@ -165,7 +167,7 @@ export default {
       // this.setScrollTop(e.detail.scrollTop)
     },
     async fetch() {
-      if (this.loading || this.disabled) return
+      if (this.loading || this.disabled || this.refresherDisabled) return
       this.triggered = true
       this.freshing = true
       const currentPage = 1
@@ -178,7 +180,7 @@ export default {
       })
     },
     async loadmore() {
-      if (this.freshing || this.disabled) return
+      if (this.freshing || this.disabled || this.loadmoreDisabled) return
       if (this.isNoMore || this.isNoData) return this.stop()
       this.loading = true
       const currentPage = Math.ceil(this.skip / this.limit)
