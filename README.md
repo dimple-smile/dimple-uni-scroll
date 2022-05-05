@@ -112,6 +112,8 @@ export default {
 | noMore | 是否为没有更多数据状态 | Boolean,String | '' | 只有设置为布尔值才会生效 |
 | error | 是否为错误状态 | Boolean | false | 设置为true时会覆盖默认slot，为防止组件体积过大和太业务，根据业务进行slot效果最好 |
 | errorText | 错误状态时默认显示的文本 | String | 服务异常，请稍后刷新重试 | 设置slot后会覆盖 |
+| refreshDisabled | 是否禁用下拉刷新 | Boolean | false | 设置后，下拉刷新将失效 |
+| loadmoreDisabled | 是否禁用自动加载 | Boolean | false | 设置后，到底自动加载将失效 |
 
 注意：limit、skip、total三个参数配合可以得出，是否没有数据 以及 是否已经加载完数据。注意都要在请求之后再改变skip和total，默认值不要设置为0。当然可以用noData和noMore自行控制。
 

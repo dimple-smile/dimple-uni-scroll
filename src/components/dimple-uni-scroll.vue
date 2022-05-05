@@ -66,8 +66,16 @@ module.exports = {
     @refresherabort="refresh.onAbort"
     @scroll="handleScroll"
   >
-    <view slot="refresher" class="dimple-uni-scroll-refresher" :style="{ background: refresherBackground }">
-      <view class="u-loading-flower refresher-icon" :class="{ spin: freshing }" :style="{ height: loaderSize + 'px', width: loaderSize + 'px' }"></view>
+    <view
+      slot="refresher"
+      class="dimple-uni-scroll-refresher"
+      :style="{ background: refresherBackground }"
+    >
+      <view
+        class="u-loading-flower refresher-icon"
+        :class="{ spin: freshing }"
+        :style="{ height: loaderSize + 'px', width: loaderSize + 'px' }"
+      ></view>
       <view style="width: 5px"></view>
       <view v-if="freshing">{{ freshingText }}</view>
       <view class="dimple-uni-scroll-refresher-text">
@@ -82,19 +90,34 @@ module.exports = {
         <view class="dimple-uni-scroll-no-data"> {{ errorText }} </view>
       </slot>
       <slot v-if="isNoData" name="noData">
-        <view class="dimple-uni-scroll-no-data">{{ noDataText }}</view>
+        <view class="dimple-uni-scroll-no-data" :style="[computedNoDataStyle]">{{ noDataText }}</view>
       </slot>
 
       <view v-if="!error" class="dimple-uni-scroll-content-slot">
         <slot></slot>
       </view>
       <slot v-if="isNoMore" name="noMore">
-        <view class="dimple-uni-scroll-no-more">{{ noMoreText }}</view>
+        <view class="dimple-uni-scroll-no-more" :style="[computedNoMoreStyle]">{{ noMoreText }}</view>
       </slot>
     </view>
-    <view class="dimple-uni-scroll-loadmorer" :class="{ 'dimple-uni-scroll-loadmorer-hidden': isNoData || isNoMore || error || disabled || loadmoreDisabled}">
-      <slot v-if="!isNoMore && loading && !error" name="loadmorer" :threshold="threshold" :loading="loading">
-        <view class="u-loading-flower spin" :style="{ height: loaderSize + 'px', width: loaderSize + 'px' }"> </view>
+    <view
+      class="dimple-uni-scroll-loadmorer"
+      :class="{
+        'dimple-uni-scroll-loadmorer-hidden':
+          isNoData || isNoMore || error || disabled || loadmoreDisabled,
+      }"
+    >
+      <slot
+        v-if="!isNoMore && loading && !error"
+        name="loadmorer"
+        :threshold="threshold"
+        :loading="loading"
+      >
+        <view
+          class="u-loading-flower spin"
+          :style="{ height: loaderSize + 'px', width: loaderSize + 'px' }"
+        >
+        </view>
         <view style="width: 5px"></view>
         <view>{{ loadingText }}</view>
       </slot>
@@ -105,19 +128,19 @@ module.exports = {
 <script>
 export default {
   props: {
-    height: { type: String, default: '100%' },
-    background: { type: String, default: '#eeeeee' },
+    height: { type: String, default: "100%" },
+    background: { type: String, default: "#eeeeee" },
     threshold: { type: Number, default: 80 },
     limit: { type: Number, default: 20 },
     skip: { type: Number, default: -1 },
     total: { type: Number, default: -1 },
-    refresherBackground: { type: String, default: '#eeeeee' },
-    refresherText: { type: String, default: '下拉刷新' },
-    refresherActivedText: { type: String, default: '松开刷新' },
-    freshingText: { type: String, default: '刷新中...' },
-    loadingText: { type: String, default: '加载中...' },
-    noDataText: { type: String, default: '暂无数据' },
-    noMoreText: { type: String, default: '没有更多数据了' },
+    refresherBackground: { type: String, default: "#eeeeee" },
+    refresherText: { type: String, default: "下拉刷新" },
+    refresherActivedText: { type: String, default: "松开刷新" },
+    freshingText: { type: String, default: "刷新中..." },
+    loadingText: { type: String, default: "加载中..." },
+    noDataText: { type: String, default: "暂无数据" },
+    noMoreText: { type: String, default: "没有更多数据了" },
     loaderSize: { type: Number, default: 25 },
     disabled: { type: Boolean, default: false },
     refreshDisabled: { type: Boolean, default: false },
@@ -125,7 +148,7 @@ export default {
     noData: { type: [Boolean, Number], default: -1 },
     noMore: { type: [Boolean, Number], default: -1 },
     error: { type: Boolean, default: false },
-    errorText: { type: String, default: '服务异常，请稍后刷新重试' },
+    errorText: { type: String, default: "服务异常，请稍后刷新重试" },
   },
   data() {
     return {
@@ -134,122 +157,164 @@ export default {
       loading: false,
       scrollTop: 0,
       oldScrollTop: 0,
-    }
+    };
   },
   computed: {
     isNoData() {
-      if (this.error) return false
-      if (this.noData === true || this.noData === false) return this.noData
-      if (this.freshing || this.loading || this.disabled || this.refreshDisabled) return false
-      if (this.total < 0 || this.skip < 0) return false
-      return this.total === 0
+      if (this.error) return false;
+      if (this.noData === true || this.noData === false) return this.noData;
+      if (
+        this.freshing ||
+        this.loading ||
+        this.disabled ||
+        this.refreshDisabled
+      )
+        return false;
+      if (this.total < 0 || this.skip < 0) return false;
+      return this.total === 0;
     },
     isNoMore() {
-      if (this.error) return false
-      if (this.noMore === true || this.noMore === false) return this.noMore
-      if (this.isNoData || this.freshing || this.loading || this.disabled || this.loadmoreDisabled) return false
-      if (this.total < 0 || this.skip < 0) return false
-      return this.total <= this.skip
+      if (this.error) return false;
+      if (this.noMore === true || this.noMore === false) return this.noMore;
+      if (
+        this.isNoData ||
+        this.freshing ||
+        this.loading ||
+        this.disabled ||
+        this.loadmoreDisabled
+      )
+        return false;
+      if (this.total < 0 || this.skip < 0) return false;
+      return this.total <= this.skip;
+    },
+    computedNoDataStyle() {
+      return {
+        "text-align": "center",
+        padding: "20px",
+        "font-size": "14px",
+        color: "#aaa",
+      };
+    },
+    computedNoMoreStyle() {
+      return {
+        "text-align": "center",
+        padding: "20px",
+        "font-size": "14px",
+        color: "#aaa",
+        "padding-top": "0px",
+      };
     },
   },
   watch: {
     total(newValue, oldValue) {
-      if (oldValue > -1 && newValue === -1) this.setScrollTop(0)
+      if (oldValue > -1 && newValue === -1) this.setScrollTop(0);
     },
   },
   methods: {
     onRestore() {
-      this.triggered = 'restore' // 需要重置
+      this.triggered = "restore"; // 需要重置
     },
     handleScroll(e) {
-      this.$emit('scroll', e)
-      this.oldScrollTop = e.detail.scrollTop
+      this.$emit("scroll", e);
+      this.oldScrollTop = e.detail.scrollTop;
       // this.setScrollTop(e.detail.scrollTop)
     },
     async fetch() {
-      if (this.loading || this.disabled || this.refreshDisabled) return
-      this.triggered = true
-      this.freshing = true
-      const currentPage = 1
-      this.$emit('fetch', {
+      if (this.loading || this.disabled || this.refreshDisabled) return;
+      this.triggered = true;
+      this.freshing = true;
+      const currentPage = 1;
+      this.$emit("fetch", {
         stop: this.stop,
         skip: this.skip,
         limit: this.limit,
         page: currentPage,
         total: this.total,
-      })
+      });
     },
     async loadmore() {
-      if (this.freshing || this.disabled || this.loadmoreDisabled) return
-      if (this.isNoMore || this.isNoData) return this.stop()
-      this.loading = true
-      const currentPage = Math.ceil(this.skip / this.limit)
-      this.$emit('fetch', {
+      if (this.freshing || this.disabled || this.loadmoreDisabled) return;
+      if (this.isNoMore || this.isNoData) return this.stop();
+      this.loading = true;
+      const currentPage = Math.ceil(this.skip / this.limit);
+      this.$emit("fetch", {
         loadmore: true,
         stop: this.stop,
         skip: this.skip,
         limit: this.limit,
         page: currentPage + 1,
         total: this.total,
-      })
+      });
     },
     stop() {
-      this.freshing = false
-      this.loading = false
-      this.triggered = false
-      Promise.all([this.getContainerRect(), this.getScrollSlotContentRect()]).then((result) => {
-        const [containerRect, contentRect] = result
-        const containerHeight = containerRect.height
-        const contentHeight = contentRect.height
-        if (contentHeight <= containerHeight && !this.isNoData && !this.isNoMore) {
-          this.setScrollTop(0)
+      this.freshing = false;
+      this.loading = false;
+      this.triggered = false;
+      Promise.all([
+        this.getContainerRect(),
+        this.getScrollSlotContentRect(),
+      ]).then((result) => {
+        const [containerRect, contentRect] = result;
+        const containerHeight = containerRect.height;
+        const contentHeight = contentRect.height;
+        if (
+          contentHeight <= containerHeight &&
+          !this.isNoData &&
+          !this.isNoMore
+        ) {
+          this.setScrollTop(0);
         }
-      })
+      });
     },
     setScrollTop(value) {
-      this.scrollTop = this.oldScrollTop
+      this.scrollTop = this.oldScrollTop;
       this.$nextTick(() => {
-        this.scrollTop = value
-      })
+        this.scrollTop = value;
+      });
     },
     getContainerRect() {
-      const query = uni.createSelectorQuery().in(this)
+      const query = uni.createSelectorQuery().in(this);
       return new Promise((res) => {
         query
-          .select('.dimple-uni-scroll')
+          .select(".dimple-uni-scroll")
           .boundingClientRect((data) => res(data))
-          .exec()
-      })
+          .exec();
+      });
     },
     getScrollSlotContentRect() {
-      const query = uni.createSelectorQuery().in(this)
+      const query = uni.createSelectorQuery().in(this);
       return new Promise((res) => {
         query
-          .select('.dimple-uni-scroll-content-slot')
+          .select(".dimple-uni-scroll-content-slot")
           .boundingClientRect((data) => res(data))
-          .exec()
-      })
+          .exec();
+      });
     },
     addObserver() {
       // loadmorer监听
-      this.autoloadObserver = uni.createIntersectionObserver(this)
-      this.autoloadObserver.relativeTo('.dimple-uni-scroll').observe('.dimple-uni-scroll-loadmorer', ({ intersectionRatio, time }) => {
-        if (this.isNoMore || this.isNoData) return
-        const visible = intersectionRatio > 0
-        visible && this.loadmore()
-      })
+      this.autoloadObserver = uni.createIntersectionObserver(this);
+      this.autoloadObserver
+        .relativeTo(".dimple-uni-scroll")
+        .observe(
+          ".dimple-uni-scroll-loadmorer",
+          ({ intersectionRatio, time }) => {
+            if (this.isNoMore || this.isNoData) return;
+            const visible = intersectionRatio > 0;
+            visible && this.loadmore();
+          }
+        );
     },
     removeObserver() {
-      this.autoloadObserver && this.autoloadObserver.disconnect()
+      this.autoloadObserver && this.autoloadObserver.disconnect();
     },
   },
   mounted() {
-    this.addObserver()
+    this.addObserver();
   },
   destroyed() {
-    this.removeObserver()
+    this.removeObserver();
   },
-}
+};
 </script>
 
 <style scoped>
