@@ -90,14 +90,22 @@ module.exports = {
         <view class="dimple-uni-scroll-no-data"> {{ errorText }} </view>
       </slot>
       <slot v-if="isNoData" name="noData">
-        <view class="dimple-uni-scroll-no-data" :style="[computedNoDataStyle]">{{ noDataText }}</view>
+        <view
+          class="dimple-uni-scroll-no-data"
+          :style="[computedNoDataStyle]"
+          >{{ noDataText }}</view
+        >
       </slot>
 
       <view v-if="!error" class="dimple-uni-scroll-content-slot">
         <slot></slot>
       </view>
       <slot v-if="isNoMore" name="noMore">
-        <view class="dimple-uni-scroll-no-more" :style="[computedNoMoreStyle]">{{ noMoreText }}</view>
+        <view
+          class="dimple-uni-scroll-no-more"
+          :style="[computedNoMoreStyle]"
+          >{{ noMoreText }}</view
+        >
       </slot>
     </view>
     <view
@@ -247,9 +255,12 @@ export default {
       });
     },
     stop() {
-      this.freshing = false;
-      this.loading = false;
-      this.triggered = false;
+      setTimeout(() => {
+        this.freshing = false;
+        this.loading = false;
+        this.triggered = false;
+      }, 0);
+
       Promise.all([
         this.getContainerRect(),
         this.getScrollSlotContentRect(),
