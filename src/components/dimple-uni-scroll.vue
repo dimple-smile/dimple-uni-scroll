@@ -60,6 +60,10 @@ module.exports = {
     refresher-default-style="none"
     :data-threshold="threshold"
     :scroll-top="scrollTop"
+    :scroll-into-view="scrollIntoView"
+    :scroll-with-animation="scrollWithAnimation"
+    :enable-back-to-top="enableBackToTop"
+    :show-scrollbar="showScrollbar"
     @refresherpulling="refresh.onPulling"
     @refresherrefresh="refresh.onRefresh"
     @refresherrestore="onRestore"
@@ -158,6 +162,10 @@ export default {
     noMore: { type: [Boolean, Number], default: -1 },
     error: { type: Boolean, default: false },
     errorText: { type: String, default: "服务异常，请稍后刷新重试" },
+    scrollIntoView: { type: String },
+    scrollWithAnimation: { type: Boolean, default: false },
+    enableBackToTop: { type: Boolean, default: false },
+    showScrollbar: { type: Boolean, default: false },
   },
   data() {
     return {
