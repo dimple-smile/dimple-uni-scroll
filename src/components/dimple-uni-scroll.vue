@@ -69,7 +69,6 @@ module.exports = {
     @refresherrestore="onRestore"
     @refresherabort="refresh.onAbort"
     @scroll="handleScroll"
-    v-bind="$attrs"
   >
     <view
       slot="refresher"
